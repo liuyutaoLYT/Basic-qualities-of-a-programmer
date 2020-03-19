@@ -1,0 +1,5 @@
+参考https://blog.csdn.net/HaydenYu/article/details/74061674
+这篇文章中 详细的说明了String s = "a" String s1 = new String("asd")；的区别
+s1 这样的引用 是存在与栈空间中， “new String(asd)” 存在于堆空间中 asd 存在于方法区
+s 引用存放在栈空间当中 “asd” 直接存在于方法区的字符串常量池中
+在String相加的时候 他会先在字符串常量池中找，如果不存在 S2 = “hello”+“world” 如果存在 就直接指向
