@@ -43,3 +43,93 @@ public class client{
 }
 ```
 这样写的弊端，如果我要增加一种服饰，比如内裤，披风，这样我就需要去修改Person类，就违反了开放-封闭原则（软件的实体是可宽展的，不可修改的）
+-------------------------------------------------------------------------------------------------------
+2020.6.3：今天uzi宣布要退役了，从当初厂长退役 到 ig夺冠，再到现在uzi也走了，真的感觉到我们的青春一步步走远了。
+昨天咱们说到，这样写的弊端，是违反了开放-封闭原则；接下来我修改了一版
+```
+public class Person {
+	private String name;
+	public Person(String name) {
+		this.name = name;
+	}
+	private void show() {
+		System.out.println("装扮的"+this.name);
+	}
+}
+```
+```
+public abstract class Finery {
+	public abstract void show();
+}
+```
+```
+public class BigTrouser extends Finery{
+	@Override
+	public void show() {
+		System.out.println("大裤衩子");
+	}
+}
+```
+```
+public class Tshirts extends Finery{
+	@Override
+	public void show() {
+		System.out.println("大T");
+	}
+}
+```
+```
+public class Client {
+	public static void main(String[] args) {
+		Finery tshirt = new Tshirts();
+		Finery trouser = new BigTrouser();
+		tshirt.show();
+		trouser.show();
+	}
+}
+```
+这样的话，如果我们想再添加一种服饰，就只需要我们来增加一个子类就可以了，但是这样也有一个弊端，就相当于是你光着身子站在大家的面前，然后一件一件的穿衣服
+这样的话我们就需要把所有的功能串联在一起进行控制，于是有了最后一版：
+```
+public class Person {
+	private String name;
+	public Person() {}
+	public Person(String name) {
+		this.name = name;
+	}
+	public void show() {
+		System.out.println("装扮的"+name);
+	}
+}
+```
+```
+public class Finery extends Person{
+	protected Person person;
+	public void Decorate(Person person) {
+		this.person = person;
+	}
+	@Override
+	public void show() {
+		if(person!=null) {
+			person.show();
+		}
+	}
+}
+```
+```
+public class BigTrouser extends Finery{
+	@Override
+	public void show() {
+		System.out.println("大裤衩子");
+	}
+}
+```
+```
+public class Tshirts extends Finery{
+	@Override
+	public void show() {
+		System.out.println("大T");
+	}
+}
+```
+## 总结:个人感觉装饰器模式就是就相当于是一个人到了上衣店，他给你穿了一件上衣，然后你有了上衣去裤子店，他给你穿了一个裤子，一系列的操作是串联的，并且是无序的。可以动态的给功能去添加更多功能的一种形式，而且这样的话，耦合程度也非常，可以去除类中的相关的重复装饰逻辑，他就是把一个装饰的对象放在了一个类中，然后又有其他的类来装饰这个类。
