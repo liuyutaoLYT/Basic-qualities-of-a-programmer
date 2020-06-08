@@ -132,4 +132,15 @@ public class Tshirts extends Finery{
 	}
 }
 ```
+```
+public class Client {
+	public static void main(String[] args) {
+		Person person = new Person("aaa");
+		Tshirts t = new Tshirts();
+		BigTrouser bt = new BigTrouser();
+		bt.Decorate(person);
+		t.Decorate(bt);
+	}
+}
+```
 ## 总结:个人感觉装饰器模式就是就相当于是一个人到了上衣店，他给你穿了一件上衣，然后你有了上衣去裤子店，他给你穿了一个裤子，一系列的操作是串联的，并且是无序的。可以动态的给功能去添加更多功能的一种形式，而且这样的话，耦合程度也非常，可以去除类中的相关的重复装饰逻辑，他就是把一个装饰的对象放在了一个类中，然后又有其他的类来装饰这个类。
